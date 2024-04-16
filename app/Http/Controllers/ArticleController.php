@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Article;
+use App\Http\Controllers\ArticleController;
 
-class BlogController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $articles = Article::all();
+        return Inertia::render('Article/Index', ['articles' => $articles]);
+
+
     }
 
     /**
