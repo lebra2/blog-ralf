@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Article;
-use App\Http\Controllers\ArticleController;
 
 class ArticleController extends Controller
 {
@@ -14,8 +13,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-        return Inertia::render('Article/Index', ['articles' => $articles]);
+        // $articles = Article::all();
+        // return Inertia::render('Article/Index', ['articles' => $articles]);
+        return Inertia::render('Article/Index', [
+            'articles' => Article::all(),
+        ]); 
 
 
     }
@@ -25,7 +27,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Article/Create');
     }
 
     /**
@@ -33,7 +35,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Article::create($request->validate([
+            'description' => 'required',
+            'title' => 'required',
+        ]));
+
+        return redirect()->route('articles.index');
+
     }
 
     /**
@@ -47,24 +55,32 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Article $article)
     {
-        //
+        return Inertia::render('Article/Edit', ['article' => $article]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Article $article)
     {
-        //
+        $article->update([
+            'description' => $request->description,
+            'title' => $request->title,
+        ]);
+
+        return redirect()->route (route: 'articles.index');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect()->route (route: 'articles.index');
+
     }
 }
