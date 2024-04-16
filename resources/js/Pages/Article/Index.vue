@@ -29,20 +29,11 @@ const props = defineProps(['articles'])
 
                             <div class="absolute pr-2 pb-1 text-emerald-500 right-0 bottom-0">
                                 <Link class="" :href="route('articles.edit', {article})">Edit</Link>
+                                <Link class="text-red-500 ml-2" :href="route('articles.destroy', {article})" method="delete" as="button" type="button">Delete</Link>
                             </div>
                         </div>
-                        
-
-                        <div class="flex gap-4">
-                            <!-- <Link class="text-red-500" :href="route('articles.destroy', {articles})" method="delete" as="button" type="button">Delete</Link> -->
-                        </div>
-                        <!-- <div class="flex my-12 flex-col">
-                            <label for="">Comment</label>
-                            <Input></Input>
-                        </div> -->
                     </div>
-                </div>
-                
+                </div>           
             </div>
         </div>
     </AuthenticatedLayout>
