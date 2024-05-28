@@ -16,7 +16,7 @@ class ArticleController extends Controller
         // $articles = Article::all();
         // return Inertia::render('Article/Index', ['articles' => $articles]);
         return Inertia::render('Article/Index', [
-            'articles' => Article::all(),
+            'articles' => Article::with('comments')->get(),
         ]); 
 
 
@@ -80,7 +80,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route (route: 'articles.index');
+        return back()->with('success', 'Artikkel kustutatud.');
 
     }
 }

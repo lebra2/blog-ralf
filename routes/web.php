@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Foundation\Application;
@@ -30,5 +31,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('articles', ArticleController::class)->withTrashed();
+Route::post('/{article}/comment', [CommentController::class, 'store'])->name('comment.post');
+Route::delete('/{comment}/comment', [CommentController::class, 'destroy'])->name('comment.delete');
 
 require __DIR__.'/auth.php';
