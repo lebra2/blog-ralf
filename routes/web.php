@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('articles', ArticleController::class)->withTrashed();
+// Route::resource('comments', ArticleController::class)->withTrashed();
 Route::post('/{article}/comment', [CommentController::class, 'store'])->name('comment.post');
 Route::delete('/{comment}/comment', [CommentController::class, 'destroy'])->name('comment.delete');
 

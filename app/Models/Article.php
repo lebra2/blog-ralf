@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User;
 
 class Article extends Model
 {
@@ -12,8 +13,14 @@ class Article extends Model
 
     protected $fillable = [
         'description',
-        'title'
+        'title',
+        'user_id'
     ];
+
+    public function user()
+{
+    return $this->belongsTo(User::class)->select(['id', 'name']);
+}
     
     public function comments(): HasMany
     {

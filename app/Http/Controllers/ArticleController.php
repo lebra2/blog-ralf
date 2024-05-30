@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Article;
@@ -16,7 +17,7 @@ class ArticleController extends Controller
         // $articles = Article::all();
         // return Inertia::render('Article/Index', ['articles' => $articles]);
         return Inertia::render('Article/Index', [
-            'articles' => Article::with('comments')->get(),
+            'articles' => Article::with('comments.user')->get(),
         ]); 
 
 
@@ -77,7 +78,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article)
+    public function destroy(Article $article, Comment $comment)
     {
         $article->delete();
         return back()->with('success', 'Artikkel kustutatud.');
