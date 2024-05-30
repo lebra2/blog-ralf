@@ -35,4 +35,7 @@ Route::resource('articles', ArticleController::class)->withTrashed();
 Route::post('/{article}/comment', [CommentController::class, 'store'])->name('comment.post');
 Route::delete('/{comment}/comment', [CommentController::class, 'destroy'])->name('comment.delete');
 
-require __DIR__.'/auth.php';
+Route::get('admin/dashboard', [ArticleController::class, 'index'])->
+    middleware(['auth', 'admin']);
+
+require __DIR__ . '/auth.php';
