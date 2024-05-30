@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CommentController extends Controller
@@ -37,8 +38,14 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        $comment->delete();
-        return back()->with('success', 'Kommentaar kustutatud.');
+        if (Auth::check() && Auth::user()->usertype == 'admin') {
+            $comment->delete();
+            return back()->with('success', 'Kommentaar kustutatud.');
+        } elseif(Auth::check() && Auth::user()->usertype == 'user') {
+            return back()->with('success', 'Sul ei ole piisavalt oiguseid');    
+        }
+        return false;
+
 
     }
 }
