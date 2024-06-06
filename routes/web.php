@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
 use Illuminate\Foundation\Application;
@@ -31,11 +32,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('articles', ArticleController::class)->withTrashed();
-// Route::resource('comments', ArticleController::class)->withTrashed();
 Route::post('/{article}/comment', [CommentController::class, 'store'])->name('comment.post');
 Route::delete('/{comment}/comment', [CommentController::class, 'destroy'])->name('comment.delete');
 
-Route::get('admin/dashboard', [ArticleController::class, 'index'])->
+Route::get('/class', function() {
+    return Inertia::render('Api/Index');
+})->middleware(['auth:sanctum', 'verified'])->name('api');
+
+Route::get('admin/dashboard', [ArticleController::class, 'class'])->
     middleware(['auth', 'admin']);
 
 require __DIR__ . '/auth.php';
